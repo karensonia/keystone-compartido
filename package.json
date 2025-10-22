@@ -7,8 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite preview --host 0.0.0.0 --port 8080",
+    "gcp:deploy": "gcloud app deploy",
+    "gcp:deploy-cloud-run": "gcloud run deploy keystone-compartido --source ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

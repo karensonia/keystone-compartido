@@ -1,0 +1,41 @@
+runtime: nodejs20
+
+env: standard
+
+instance_class: F1
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+
+handlers:
+# Serve all static files with long-term caching
+- url: /assets
+  static_dir: dist/assets
+  secure: always
+
+# Serve the main HTML file for all other routes
+- url: /.*
+  static_files: dist/index.html
+  upload: dist/index\.html
+  secure: always
+
+skip_files:
+- ^(.*/)?\..*$
+- ^(.*/)?.*\.pyc$
+- ^(.*/)?.*\.pyo$
+- ^(.*/)?.*\.pyd$
+- ^(.*/)?__pycache__/.*$
+- ^(.*/)?node_modules/.*$
+- ^(.*/)?src/.*$
+- ^(.*/)?public/.*$
+- ^(.*/)?\.git/.*$
+- ^(.*/)?\.gitignore$
+- ^(.*/)?\.env.*$
+- ^(.*/)?README\.md$
+- ^(.*/)?package-lock\.json$
+- ^(.*/)?tsconfig.*\.json$
+- ^(.*/)?vite\.config\.ts$
+- ^(.*/)?tailwind\.config\.ts$
+- ^(.*/)?postcss\.config\.js$
+- ^(.*/)?eslint\.config\.js$
