@@ -1,6 +1,6 @@
 # Dockerfile para aplicación React/Vite en Google Cloud
 
-# Usar imagen oficial de Node.js
+# Etapa 1: Build
 FROM node:20-alpine as builder
 
 # Establecer directorio de trabajo
@@ -9,8 +9,8 @@ WORKDIR /app
 # Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar dependencias
-RUN npm ci --only=production
+# Instalar todas las dependencias (incluyendo devDependencies para el build)
+RUN npm ci
 
 # Copiar código fuente
 COPY . .
@@ -18,33 +18,11 @@ COPY . .
 # Construir la aplicación
 RUN npm run build
 
-# Etapa de producción - usar nginx para servir archivos estáticos
+# Etapa 2: Producción con nginx
 FROM nginx:alpine
 
-# Copiar configuración personalizada de nginx
-COPY <<EOF /etc/nginx/conf.d/default.conf
-server {
-    listen 8080;
-    server_name localhost;
-    root /usr/share/nginx/html;
-    index index.html;
-
-    # Habilitar compresión
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-
-    # Configurar headers para cache de assets
-    location /assets {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-
-    # Servir React Router (SPA)
-    location / {
-        try_files \$uri \$uri/ /index.html;
-    }
-}
-EOF
+# Copiar configuración de nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar archivos construidos desde la etapa builder
 COPY --from=builder /app/dist /usr/share/nginx/html
