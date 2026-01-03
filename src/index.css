@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 10% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 8% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 8% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 353, 100%, 74%;
+  --primary-hover: 353 100% 64%;
+    --primary-foreground: 0 0% 100%;
+
+  /* secondary: changed to a teal/cyan tone to be visually distinct from primary */
+  --secondary: 190, 85%, 48%;
+  --secondary-foreground: 0 0% 100%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 240 6% 25%;
+    --muted-foreground: 240 5% 64%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 20%;
+    --input: 240 6% 20%;
+    --ring: 271 81% 56%;
+
+    --radius: 1rem;
+
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(353, 100%, 74%), hsl(353, 100%, 74%));
+    --gradient-secondary: linear-gradient(135deg, hsl(353, 90%, 69%), hsl(353, 87%, 75%));
+    --gradient-bg: linear-gradient(180deg, hsl(234, 52%, 14%), hsl(234, 52%, 14%));
+    
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(353, 95%, 75%);
+    --shadow-card: 0 8px 32px hsl(353, 93%, 76%);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: linear-gradient(180deg, hsl(234, 52%, 14%), hsl(234, 52%, 14%));
+    background-attachment: fixed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .glass-card {
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  /* Image mask: overlay the app background color at 5% opacity
+     Usage:
+       - Add class `img-mask` to an <img> wrapper or the image itself.
+       - Or use `bg-img-mask` on a container to apply the same overlay.
+  */
+  .img-mask {
+    position: relative;
+    display: inline-block;
+  }
+
+  .img-mask img,
+  .img-mask > img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .img-mask::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, hsl(var(--background)) 5%, transparent);
+    pointer-events: none;
+    mix-blend-mode: normal;
+  }
+
+  /* For background images or container overlays */
+  .bg-img-mask::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, hsl(var(--background)) 5%, transparent);
+    pointer-events: none;
+    mix-blend-mode: normal;
+  }
+}
