@@ -123,32 +123,38 @@ export const SongCard = ({
           </div>
         )}
 
-        {/* Mobile base: attached to the bottom edge of the card, full width */}
+        {/* Mobile base: two equal halves (left: preview, right: add) attached to bottom of card */}
         <div className="sm:hidden mt-2 -mx-4">
-          <div className="bg-muted/5 border-t border-border flex items-center justify-between">
-            <div className="flex-1">
+          <div className="bg-muted/5 border-t border-border flex">
+            {/* Left: Preview (50%) */}
+            <div className="w-1/2 border-r border-border">
+              <Button
+                size="default"
+                variant={previewUrl || trackId ? "outline" : "ghost"}
+                onClick={onPreview}
+                disabled={!onPreview || (!previewUrl && !trackId)}
+                className="w-full h-full rounded-none flex items-center justify-center gap-2 py-3"
+                title={isPreviewing ? "Cerrar preview" : "Escuchar preview"}
+              >
+                <PlayCircle className="w-4 h-4" />
+                <span className="text-sm">{isPreviewing ? "Cerrar" : "Escuchar"}</span>
+              </Button>
+            </div>
+
+            {/* Right: Add (50%) */}
+            <div className="w-1/2">
               <Button
                 size="default"
                 variant={isAdded ? "outline" : "gradient"}
                 onClick={onAdd}
                 disabled={isAdded}
-                className="w-full rounded-none"
+                className="w-full h-full rounded-none flex items-center justify-center gap-2 py-3"
+                title={isAdded ? "Agregada" : "Agregar canción"}
               >
-                {isAdded ? "Agregada" : "Agregar canción"}
+                <Plus className="w-4 h-4" />
+                <span className="text-sm">{isAdded ? "Agregada" : "Agregar"}</span>
               </Button>
             </div>
-            {onPreview && (
-              <div className="ml-2 pr-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onPreview}
-                  title={isPreviewing ? "Cerrar preview" : "Escuchar preview"}
-                >
-                  {isPreviewing ? <X className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
-                </Button>
-              </div>
-            )}
           </div>
         </div>
       </div>
