@@ -123,22 +123,22 @@ export const SongCard = ({
           </div>
         )}
 
-        {/* Mobile base: fixed base area at the bottom of the card (not floating) */}
-        <div className="sm:hidden mt-2">
-          <div className="bg-muted/5 rounded-b-lg p-3 flex items-center justify-between">
-            <div className="flex-1 pr-2">
+        {/* Mobile base: attached to the bottom edge of the card, full width */}
+        <div className="sm:hidden mt-2 -mx-4">
+          <div className="bg-muted/5 border-t border-border flex items-center justify-between">
+            <div className="flex-1">
               <Button
                 size="default"
                 variant={isAdded ? "outline" : "gradient"}
                 onClick={onAdd}
                 disabled={isAdded}
-                className="w-full"
+                className="w-full rounded-none"
               >
                 {isAdded ? "Agregada" : "Agregar canción"}
               </Button>
             </div>
             {onPreview && (
-              <div className="ml-2">
+              <div className="ml-2 pr-2">
                 <Button
                   variant="ghost"
                   size="icon"
